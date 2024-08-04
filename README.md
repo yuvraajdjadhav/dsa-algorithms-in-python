@@ -95,8 +95,7 @@ cd dsa-algorithms-python
 Navigate to the desired data structure or algorithm directory and run the Python script to see the implementation and examples.
 
 ```bash
-cd data_structures/linked_list
-python singly_linked_list.py
+cd dsa-algorithms-in-python
 ```
 
 ## Contributing
