@@ -16,4 +16,4 @@ deploy_to_github:
     - git pull origin main  # Adjust if your main branch is different
     - git push github temp-branch:main  # Adjust if your main branch is different
   only:
-    - main  # This triggers the job only on changes to the main branch
+    - main  # This triggers the job only on changes to the main branch update
