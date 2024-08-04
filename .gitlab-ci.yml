@@ -1,0 +1,37 @@
+stages:
+  - lint
+  - test
+  - deploy
+
+variables:
+  # Define the default branch names
+  DEV_BRANCH: "dev"
+  MAIN_BRANCH: "main"
+
+# Linting stage
+lint:
+  stage: lint
+  script:
+    - echo "Running linter..."
+    - flake8 .  # Example linter for Python
+
+# Testing stage
+test:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - pytest  # Example test runner for Python
+
+# Deployment stage (merging dev to main)
+deploy:
+  stage: deploy
+  script:
+    - echo "Merging $DEV_BRANCH into $MAIN_BRANCH..."
+    - git config --global user.email "your-email@example.com"
+    - git config --global user.name "Your Name"
+    - git checkout $MAIN_BRANCH
+    - git pull origin $MAIN_BRANCH
+    - git merge $DEV_BRANCH
+    - git push origin $MAIN_BRANCH
+  only:
+    - dev
