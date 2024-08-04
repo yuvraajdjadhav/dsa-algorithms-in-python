@@ -1,37 +1,19 @@
 stages:
-  - lint
-  - test
   - deploy
 
 variables:
-  # Define the default branch names
-  DEV_BRANCH: "dev"
-  MAIN_BRANCH: "main"
+  GITHUB_USER: "yuvraajdjadhav"
+  GITHUB_EMAIL: "yuvrajdjadhav@gmail.com"
 
-# Linting stage
-lint:
-  stage: lint
-  script:
-    - echo "Running linter..."
-    - flake8 .  # Example linter for Python
-
-# Testing stage
-test:
-  stage: test
-  script:
-    - echo "Running tests..."
-    - pytest  # Example test runner for Python
-
-# Deployment stage (merging dev to main)
-deploy:
+deploy_to_github:
   stage: deploy
   script:
-    - echo "Merging $DEV_BRANCH into $MAIN_BRANCH..."
-    - git config --global user.email "your-email@example.com"
-    - git config --global user.name "Your Name"
-    - git checkout $MAIN_BRANCH
-    - git pull origin $MAIN_BRANCH
-    - git merge $DEV_BRANCH
-    - git push origin $MAIN_BRANCH
+    - git config --global user.name "$GITHUB_USER"
+    - git config --global user.email "$GITHUB_EMAIL"
+    - git remote add github $GITHUB_REPO
+    - git fetch origin
+    - git checkout -b temp-branch
+    - git pull origin main  # Adjust if your main branch is different
+    - git push github temp-branch:main  # Adjust if your main branch is different
   only:
-    - dev
+    - main  # This triggers the job only on changes to the main branch
